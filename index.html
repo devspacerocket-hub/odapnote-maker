@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
+    <meta name="theme-color" content="#4f46e5" />
+    
+    <!-- SEO & Social Media -->
+    <title>오답노트메이커 - 자동 문제 정리 서비스</title>
+    <meta name="description" content="문제 사진을 업로드하면 자동으로 자르고 보정하여 깔끔한 PDF 오답노트를 만들어주는 스마트 웹 서비스입니다." />
+    <meta property="og:title" content="오답노트메이커" />
+    <meta property="og:description" content="업로드 한 번으로 끝나는 오답 정리, 이제 웹에서 간편하게 PDF로 만드세요." />
+    <meta property="og:type" content="website" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2965/2965358.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+      body {
+        font-family: 'Noto Sans KR', sans-serif;
+        background-color: #f3f4f6;
+        -webkit-tap-highlight-color: transparent;
+        overflow-x: hidden;
+      }
+      
+      @media screen and (max-width: 768px) and (orientation: landscape) {
+        #root {
+          transform: none;
+        }
+      }
+
+      .pdf-rendering-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.9);
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(4px);
+      }
+
+      .zoom-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform-origin: top center;
+        transition: transform 0.2s ease-out;
+      }
+
+      .drag-over {
+        background-color: rgba(79, 70, 229, 0.05);
+        border: 2px dashed #4f46e5;
+      }
+      
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.33.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
+    "jspdf": "https://esm.sh/jspdf@^2.5.1",
+    "html2canvas": "https://esm.sh/html2canvas@^1.4.1"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

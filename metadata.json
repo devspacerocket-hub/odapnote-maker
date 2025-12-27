@@ -1,0 +1,7 @@
+{
+  "name": "오답노트메이커",
+  "description": "수험생을 위한 스마트 오답 노트 정리 및 문서 생성 앱",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
