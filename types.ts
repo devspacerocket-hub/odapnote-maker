@@ -1,13 +1,12 @@
-
 export interface ProcessedProblem {
   id: string;
   originalImageUrl: string;
-  processedImageUrl: string; // The auto-cropped, rotated, and filtered result
+  processedImageUrl: string;
   timestamp: number;
   userNotes?: string;
-  detectedRotation?: number; // Store the AI-detected rotation angle
-  lastCrop?: CropArea; // Store the user's last crop coordinates
-  lastRotation?: number; // Store the user's last adjusted rotation
+  detectedRotation?: number;
+  lastCrop?: CropArea;
+  lastRotation?: number;
 }
 
 export enum ViewMode {
@@ -27,8 +26,8 @@ export enum LayoutGrid {
 }
 
 export interface AutoAnalysisResult {
-  box_2d: [number, number, number, number]; // [ymin, xmin, ymax, xmax] normalized 0-1000
-  rotation_angle: number; // degrees to straighten the image
+  box_2d: [number, number, number, number];
+  rotation_angle: number;
 }
 
 export interface CropArea {

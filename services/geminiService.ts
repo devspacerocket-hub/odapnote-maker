@@ -1,80 +1,63 @@
-import { GoogleGenAI, Type } from "@google/genai";
+
 import { AutoAnalysisResult } from "../types";
 
 /**
- * Uses Gemini AI to detect the academic problem area and rotation angle in the image.
- * This provides human-level accuracy for complex document layouts, far exceeding local Sobel filters.
+ * 외부 AI 없이 브라우저에서 직접 픽셀을 분석하여 문제 영역을 감지합니다.
+ * 텍스트 밀집도(어두운 픽셀 분포)를 기반으로 바운딩 박스를 계산합니다.
  */
 export const detectProblemArea = async (base64Image: string): Promise<AutoAnalysisResult | null> => {
-  // Always initialize GoogleGenAI with the API key from the environment.
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-  
-  // Extract the base64 data and mime type from the data URL.
-  const base64Parts = base64Image.split(',');
-  if (base64Parts.length < 2) return null;
-  
-  const mimeType = base64Parts[0].match(/:(.*?);/)?.[1] || 'image/jpeg';
-  const data = base64Parts[1];
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.src = base64Image;
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) { resolve(null); return; }
 
-  try {
-    // We utilize gemini-3-flash-preview for high-performance vision reasoning.
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: {
-        parts: [
-          {
-            inlineData: {
-              data: data,
-              mimeType: mimeType,
-            },
-          },
-          {
-            text: "Analyze this image and find the main academic problem or question block. Provide the bounding box in [ymin, xmin, ymax, xmax] format using normalized coordinates (0-1000) and the rotation_angle in degrees required to make the text perfectly horizontal. Return only valid JSON.",
-          },
+      // 성능을 위해 저해상도로 샘플링
+      const scale = Math.min(1, 600 / Math.max(img.width, img.height));
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      const w = canvas.width;
+      const h = canvas.height;
+
+      // 1. 그레이스케일 변환 및 텍스트 밀집도 계산
+      const rowIntensity = new Int32Array(h);
+      const colIntensity = new Int32Array(w);
+      const threshold = 130; // 텍스트로 간주할 밝기 임계값
+
+      for (let y = 0; y < h; y++) {
+        for (let x = 0; x < w; x++) {
+          const i = (y * w + x) * 4;
+          const brightness = (data[i] + data[i+1] + data[i+2]) / 3;
+          if (brightness < threshold) {
+            rowIntensity[y]++;
+            colIntensity[x]++;
+          }
+        }
+      }
+
+      // 2. 유효한 텍스트 범위 찾기 (노이즈 제거를 위해 최소 밀집도 이상인 구역만)
+      let minY = 0; while (minY < h && rowIntensity[minY] < 3) minY++;
+      let maxY = h - 1; while (maxY > minY && rowIntensity[maxY] < 3) maxY--;
+      let minX = 0; while (minX < w && colIntensity[minX] < 3) minX++;
+      let maxX = w - 1; while (maxX > minX && colIntensity[maxX] < 3) maxX--;
+
+      // 3. 정규화 좌표(0-1000)로 변환하여 결과 반환
+      resolve({
+        box_2d: [
+          (minY / h) * 1000,
+          (minX / w) * 1000,
+          (maxY / h) * 1000,
+          (maxX / w) * 1000
         ],
-      },
-      config: {
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.OBJECT,
-          properties: {
-            box_2d: {
-              type: Type.ARRAY,
-              items: { type: Type.NUMBER },
-              description: "[ymin, xmin, ymax, xmax] normalized to 1000 range.",
-            },
-            rotation_angle: {
-              type: Type.NUMBER,
-              description: "The angle in degrees to rotate the image to straighten it.",
-            },
-          },
-          required: ["box_2d", "rotation_angle"],
-        },
-      },
-    });
-
-    const jsonStr = response.text?.trim();
-    if (!jsonStr) return null;
-
-    const result = JSON.parse(jsonStr);
-    
-    // Validate that the AI response matches the AutoAnalysisResult interface.
-    if (
-      result && 
-      Array.isArray(result.box_2d) && 
-      result.box_2d.length === 4 && 
-      typeof result.rotation_angle === 'number'
-    ) {
-      return {
-        box_2d: result.box_2d as [number, number, number, number],
-        rotation_angle: result.rotation_angle
-      };
-    }
-    
-    return null;
-  } catch (error) {
-    // Log the error and return null to allow the dashboard to gracefully fallback to the original image.
-    console.error("Gemini problem detection failed:", error);
-    return null;
-  }
+        rotation_angle: 0 // 로컬 로직에서는 정밀 회전 감지 미지원 (편집기에서 수동 보정 가능)
+      });
+    };
+    img.onerror = () => resolve(null);
+  });
 };
