@@ -1,20 +1,41 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Odapnote Maker
 
-# Run and deploy your AI Studio app
+A **local-first web service** that turns problem photos into clean,
+customizable PDF answer notes.
 
-This contains everything you need to run your app locally.
+## Overview
 
-View your app in AI Studio: https://ai.studio/apps/drive/1kQCNZHM2coDnB0tVT0JTsdgURKkHmaPT
+Odapnote Maker helps users convert photos of academic problems into
+well-organized PDF answer notes. It combines automatic analysis with
+manual editing tools to ensure flexibility and accuracy.
+
+-   Automatic lighting and rotation correction
+-   Text clarity enhancement
+-   Manual editing when automatic processing is insufficient
+-   PDF preview and template selection
+-   Final PDF download
+
+## Processing Approach
+
+This service is designed to be local-first. Some advanced automatic
+analysis features may use AI-assisted processing, while users always
+retain control through manual editing.
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
+### Prerequisites
 
+-   Node.js
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### Steps
+
+``` bash
+npm install
+npm run dev
+```
+
+Open http://localhost:3000 in your browser.
+
+## Project Status
+
+This project is currently under active development.
