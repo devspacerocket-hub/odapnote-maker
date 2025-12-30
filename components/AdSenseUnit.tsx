@@ -17,7 +17,7 @@ declare global {
 
 const AdSenseUnit: React.FC<AdSenseUnitProps> = ({ 
   slotId, 
-  clientId = "ca-pub-XXXXXXXXXXXXXXXX", // 실제 본인의 ID로 교체 필요
+  clientId = import.meta.env.VITE_ADSENSE_CLIENT_ID , // 실제 본인의 ID로 교체 필요
   format = "auto", 
   responsive = true,
   className = "",
