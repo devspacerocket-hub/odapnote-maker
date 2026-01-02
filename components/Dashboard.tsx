@@ -186,7 +186,7 @@ const Dashboard: React.FC<DashboardProps> = ({ problems, setProblems, setViewMod
       <div className="flex flex-1 overflow-hidden">
         <aside className="hidden xl:flex w-[220px] shrink-0 bg-gray-50 border-r border-gray-100 items-start justify-center p-4">
           <div className="flex flex-col gap-6 w-full">
-            <AdSenseUnit slotId="sidebar-left" format="vertical" label="Side Ad Left" />
+            <AdSenseUnit slotId="3514376545" format="vertical" label="Side Ad Left" />
             <div className="p-4 bg-white rounded-2xl border border-gray-100 shadow-sm space-y-3">
                <div className="flex items-center gap-2 text-emerald-600 font-bold text-xs"><ShieldCheck size={14}/> 데이터 보안</div>
                <p className="text-[10px] text-gray-500 leading-relaxed font-medium">
@@ -284,7 +284,7 @@ const Dashboard: React.FC<DashboardProps> = ({ problems, setProblems, setViewMod
 
         <aside className="hidden xl:flex w-[220px] shrink-0 bg-gray-50 border-l border-gray-100 items-start justify-center p-4">
           <div className="flex flex-col gap-6 w-full">
-            <AdSenseUnit slotId="sidebar-right" format="vertical" label="Side Ad Right" />
+            <AdSenseUnit slotId="2201294878" format="vertical" label="Side Ad Right" />
             <div className="p-5 bg-emerald-600 rounded-[2rem] shadow-xl text-white space-y-3">
                <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center"><Info size={16}/></div>
                <h4 className="font-bold text-xs italic">Tip</h4>
