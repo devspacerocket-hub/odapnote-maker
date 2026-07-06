@@ -1,3 +1,13 @@
+/**
+ * components/AdSenseUnit.tsx
+ * 
+ * [목적]
+ * 구글 애드센스(Google AdSense) 광고 단위를 사이트 내부의 다양한 위치에 쉽게 삽입할 수 있도록 만든 공통 컴포넌트입니다.
+ * 
+ * [주요 기능]
+ * 1. 로딩 대기 시간 및 시각적인 플레이스홀더 제공
+ * 2. 부모 요소의 Props에 따라 광고 형태(수직, 수평, 반응형 등) 자동 지정
+ */
 import React, { useEffect } from 'react';
 
 interface AdSenseUnitProps {
@@ -17,7 +27,7 @@ declare global {
 
 const AdSenseUnit: React.FC<AdSenseUnitProps> = ({ 
   slotId, 
-  clientId = import.meta.env.VITE_ADSENSE_CLIENT_ID , // 실제 본인의 ID로 교체 필요
+  clientId = "ca-pub-XXXXXXXXXXXXXXXX", // 실제 본인의 ID로 교체 필요
   format = "auto", 
   responsive = true,
   className = "",

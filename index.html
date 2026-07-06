@@ -1,95 +1,63 @@
+
 <!DOCTYPE html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
-    <meta name="theme-color" content="#4f46e5" />
+    <meta name="theme-color" content="#fcfaf5" />
     
     <!-- SEO & Social Media -->
-    <title>오답노트메이커 - 자동 문제 정리 서비스</title>
-    <meta name="description" content="문제 사진을 업로드하면 자동으로 자르고 보정하여 깔끔한 PDF 오답노트를 만들어주는 스마트 웹 서비스입니다." />
-    <meta property="og:title" content="오답노트메이커" />
-    <meta property="og:description" content="업로드 한 번으로 끝나는 오답 정리, 이제 웹에서 간편하게 PDF로 만드세요." />
-    <meta property="og:type" content="website" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>오답노트메이커 - 로컬 보안 스캔 서비스</title>
+    <meta name="description" content="문제 사진을 업로드하면 서버 전송 없이 내 기기에서 직접 자르고 보정하여 깔끔한 PDF 오답노트를 만들어주는 보안 중심 서비스입니다." />
     
-    <link rel="manifest" href="./manifest.json" />
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2965/2965358.png">
-
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
       body {
         font-family: 'Noto Sans KR', sans-serif;
-        background-color: #f3f4f6;
-        -webkit-tap-highlight-color: transparent;
+        background-color: #fcfaf5;
+        margin: 0;
+        padding: 0;
         overflow-x: hidden;
       }
-      
-      @media screen and (max-width: 768px) and (orientation: landscape) {
-        #root {
-          transform: none;
-        }
+      #root {
+        min-height: 100vh;
       }
-
-      .pdf-rendering-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(255, 255, 255, 0.9);
-        z-index: 9999;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        backdrop-filter: blur(4px);
+      .pdf-page {
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
       }
-
-      .zoom-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        transform-origin: top center;
-        transition: transform 0.2s ease-out;
+      @keyframes loading-bar {
+        0% { width: 0%; }
+        100% { width: 100%; }
       }
-
+      .animate-loading-bar {
+        animation: loading-bar 3.5s linear forwards;
+      }
+      /* 드래그 앤 드롭 영역 강조 */
       .drag-over {
-        background-color: rgba(79, 70, 229, 0.05);
-        border: 2px dashed #4f46e5;
-      }
-      
-      .no-scrollbar::-webkit-scrollbar {
-        display: none;
-      }
-      .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
+        background-color: rgba(0, 0, 0, 0.02);
+        border: 2px dashed #1a1a1a;
       }
     </style>
-  <script type="importmap">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.460.0",
+    "jspdf": "https://esm.sh/jspdf@2.5.1",
+    "html2canvas": "https://esm.sh/html2canvas@1.4.1",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "jspdf": "https://esm.sh/jspdf@^3.0.4",
-    "html2canvas": "https://esm.sh/html2canvas@^1.4.1",
     "vite": "https://esm.sh/vite@^7.3.0",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
-    "@google/genai": "https://esm.sh/@google/genai@^1.34.0"
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
   }
 }
 </script>
-    <!-- ✅ Google AdSense 공용 스크립트 -->
-  <script
-    async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5541935600659941"
-    crossorigin="anonymous">
-  </script> 
-</head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
+    <script type="module" src="index.tsx"></script>
   </body>
 </html>
