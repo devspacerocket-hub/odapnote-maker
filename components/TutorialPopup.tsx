@@ -1,4 +1,3 @@
-
 /**
  * components/TutorialPopup.tsx
  * 
@@ -20,14 +19,21 @@ const TutorialPopup: React.FC<TutorialPopupProps> = ({ onClose }) => {
   const [dontShowAgain, setDontShowAgain] = useState(false);
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-hidden">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => onClose(dontShowAgain)}></div>
       
-      <div className="relative w-full max-w-2xl bg-[#fcfaf5] border-2 border-gray-900 rounded-[2.5rem] overflow-hidden animate-in fade-in zoom-in duration-300 shadow-[8px_8px_0_0_rgba(17,24,39,1)]">
-        <button onClick={() => onClose(dontShowAgain)} className="absolute top-6 right-6 p-2 text-gray-900 border-2 border-transparent hover:border-gray-900 rounded-full transition-all z-10"><X size={20} className="stroke-[3]"/></button>
+      <div className="relative w-full max-w-2xl max-h-full flex flex-col bg-[#fcfaf5] border-2 border-gray-900 rounded-[2.5rem] animate-in fade-in zoom-in duration-300 shadow-[8px_8px_0_0_rgba(17,24,39,1)]">
+        
+        {/* Header - Fixed */}
+        <div className="shrink-0 flex justify-end p-4 md:p-6 pb-0">
+          <button onClick={() => onClose(dontShowAgain)} className="p-2 text-gray-900 border-2 border-transparent hover:border-gray-900 rounded-full transition-all bg-[#fcfaf5] z-10">
+            <X size={20} className="stroke-[3]"/>
+          </button>
+        </div>
 
-        <div className="p-10">
-          <div className="flex flex-col items-center text-center mb-10">
+        {/* Content - Scrollable */}
+        <div className="flex-1 overflow-y-auto p-6 md:p-10 pt-0">
+          <div className="flex flex-col items-center text-center mb-8 md:mb-10">
             <div className="mb-6 relative">
               <div className="relative w-16 h-16 border-2 border-gray-900 rounded-[1.5rem] bg-white flex items-center justify-center text-gray-900">
                 <Sparkles size={32} />
@@ -38,7 +44,7 @@ const TutorialPopup: React.FC<TutorialPopupProps> = ({ onClose }) => {
             <p className="text-gray-600 font-medium text-sm max-w-sm mx-auto leading-relaxed">서버 전송 없이 사용자의 기기에서 즉시 문제를 분석하고 인쇄용 문서를 생성합니다.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="space-y-2">
               <div className="w-10 h-10 border-2 border-gray-900 rounded-xl bg-white flex items-center justify-center"><Upload size={18} className="text-gray-900 stroke-[2.5]"/></div>
               <h4 className="font-bold text-gray-900 text-sm">업로드 및 분석</h4>
@@ -55,17 +61,18 @@ const TutorialPopup: React.FC<TutorialPopupProps> = ({ onClose }) => {
               <p className="text-[11px] text-gray-600 font-medium leading-relaxed">원하는 개수만큼 문제를 배치하여 나만의 오답 노트를 완성하세요.</p>
             </div>
           </div>
+        </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-between pt-8 border-t-2 border-gray-900 gap-4">
-            <button onClick={() => setDontShowAgain(!dontShowAgain)} className="flex items-center gap-3 group">
-              <div className={`w-5 h-5 rounded-md border-2 transition-colors flex items-center justify-center ${dontShowAgain ? 'bg-gray-900 border-gray-900' : 'bg-white border-gray-900'}`}>
-                {dontShowAgain && <Check size={12} className="text-white stroke-[3]" />}
-              </div>
-              <span className="text-xs font-bold text-gray-600 group-hover:text-gray-900 transition-colors uppercase">다시 표시하지 않기</span>
-            </button>
+        {/* Footer - Fixed */}
+        <div className="shrink-0 p-6 md:p-8 border-t-2 border-gray-900 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <button onClick={() => setDontShowAgain(!dontShowAgain)} className="flex items-center gap-3 group w-full sm:w-auto justify-center sm:justify-start">
+            <div className={`w-5 h-5 rounded-md border-2 transition-colors flex items-center justify-center ${dontShowAgain ? 'bg-gray-900 border-gray-900' : 'bg-white border-gray-900'}`}>
+              {dontShowAgain && <Check size={12} className="text-white stroke-[3]" />}
+            </div>
+            <span className="text-xs font-bold text-gray-600 group-hover:text-gray-900 transition-colors uppercase">다시 표시하지 않기</span>
+          </button>
 
-            <button onClick={() => onClose(dontShowAgain)} className="w-full sm:w-auto px-8 py-3.5 bg-gray-900 text-white rounded-full font-black text-xs uppercase tracking-wide hover:bg-black transition-all active:scale-95">지금 시작하기</button>
-          </div>
+          <button onClick={() => onClose(dontShowAgain)} className="w-full sm:w-auto px-8 py-3.5 bg-gray-900 text-white rounded-full font-black text-xs uppercase tracking-wide hover:bg-black transition-all active:scale-95">지금 시작하기</button>
         </div>
       </div>
     </div>
