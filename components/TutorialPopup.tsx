@@ -22,7 +22,7 @@ const TutorialPopup: React.FC<TutorialPopupProps> = ({ onClose }) => {
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-hidden">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => onClose(dontShowAgain)}></div>
       
-      <div className="relative w-full max-w-2xl max-h-full flex flex-col bg-[#fcfaf5] border-2 border-gray-900 rounded-[2rem] sm:rounded-[2.5rem] animate-in fade-in zoom-in duration-300 shadow-[4px_4px_0_0_rgba(17,24,39,1)] sm:shadow-[8px_8px_0_0_rgba(17,24,39,1)]">
+      <div className="relative w-full max-w-2xl max-h-[calc(100dvh-2rem)] sm:max-h-[calc(100dvh-3rem)] flex flex-col bg-[#fcfaf5] border-2 border-gray-900 rounded-[2rem] sm:rounded-[2.5rem] animate-in fade-in zoom-in duration-300 shadow-[4px_4px_0_0_rgba(17,24,39,1)] sm:shadow-[8px_8px_0_0_rgba(17,24,39,1)]">
         
         {/* Header - Fixed */}
         <div className="shrink-0 flex justify-end p-4 md:p-6 pb-0">
