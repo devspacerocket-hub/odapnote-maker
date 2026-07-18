@@ -35,8 +35,7 @@ export enum PaperSize {
 export enum LayoutGrid {
   ONE = '1x1', // 페이지당 1문제 형태
   TWO = '1x2', // 페이지당 2문제 (세로 배열)
-  FOUR = '2x2', // 페이지당 4문제 (격자 배열)
-  SIX = '2x3' // 페이지당 6문제 (격자 배열)
+  FOUR = '2x2' // 페이지당 4문제 (격자 배열)
 }
 
 // 로컬 기반 캔버스 이미지 분석(geminiService)의 반환 결과 타입
