@@ -149,7 +149,12 @@ const PrintLayout: React.FC<PrintLayoutProps> = ({ problems, setViewMode }) => {
             const imgAreaX = x + PADDING;
             const imgAreaY = y + PADDING + Q_LABEL_HEIGHT + 3;
             const imgAreaW = cellWidth - PADDING * 2;
-            const imgAreaH = cellHeight - PADDING * 2 - Q_LABEL_HEIGHT - 3 - NOTE_HEIGHT - 2;
+            let imgAreaH = cellHeight - PADDING * 2 - Q_LABEL_HEIGHT - 3 - NOTE_HEIGHT - 2;
+            
+            // 1x1 레이아웃일 경우 이미지 최대 높이를 절반으로 제한
+            if (layout === LayoutGrid.ONE) {
+              imgAreaH = Math.min(imgAreaH, cellHeight * 0.5);
+            }
             
             const imgRatio = img.width / img.height;
             const areaRatio = imgAreaW / imgAreaH;
@@ -260,7 +265,10 @@ const PrintLayout: React.FC<PrintLayoutProps> = ({ problems, setViewMode }) => {
                     {pageData.map((prob, pIdx) => (
                       <div key={prob.id} className="flex flex-col border border-gray-50 p-4 rounded-lg h-full overflow-hidden">
                          <div className="bg-black text-white px-2 py-0.5 text-[10px] font-black w-fit mb-3 shrink-0">Q.{idx * itemsPerPage + pIdx + 1}</div>
-                         <div className="flex-1 min-h-0 w-full flex flex-col mb-2">
+                         <div 
+                           className="flex-1 min-h-0 w-full flex flex-col mb-2"
+                           style={{ maxHeight: layout === LayoutGrid.ONE ? '50%' : 'none' }}
+                         >
                            <div 
                              className="w-full h-full" 
                              style={{
