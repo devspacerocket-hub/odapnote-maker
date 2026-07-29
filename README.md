@@ -20,7 +20,7 @@
 ## 📂 코드 구조 (Code Structure)
 
 - **`App.tsx`**: 애플리케이션의 최상위 컴포넌트입니다. 현재 화면 상태(`ViewMode`: DASHBOARD / PRINT_PREVIEW)를 관리하며, 상태에 따라 `Dashboard` 또는 `PrintLayout` 컴포넌트를 렌더링합니다. 전역 문제 목록(`problems`)의 상태 배열을 가집니다.
-- **`components/Dashboard.tsx`**: 메인 대시보드 화면입니다. 파일 업로드 로직(드래그 앤 드롭 포함), 분석 중 로딩 UI 대기열, 오답노트 리스트 렌더링 및 개별 문제 메모 기능, 그리고 부가적인 알림 UI(튜토리얼, 약관 팝업 등)를 관리합니다.
+- **`components/Dashboard.tsx`**: 메인 대시보드 화면입니다. 파일 업로드 로직(드래그 앤 드롭 포함), 업로드 사진 수에 따른 동적 로딩 UI(1~2장 인라인 즉시 처리, 3장 이상 전체 모달 노출) 및 대기열 관리, 오답노트 리스트 렌더링 및 개별 문제 메모 기능, 그리고 부가적인 알림 UI를 관리합니다.
 - **`components/ImageEditor.tsx`**: 업로드된 이미지를 사용자가 다시 크롭하고 회전할 수 있도록 모달 창 형태로 나타나는 이미지 에디터입니다.
 - **`components/PrintLayout.tsx`**: 사용자가 최종적으로 PDF 출력을 요청할 때 보여지는 화면입니다. `jspdf`와 `html2canvas` 라이브러리를 활용해 화면에 렌더링된 컴포넌트 요소들을 캡처해 A4 사이즈에 맞는 깔끔한 PDF를 생성합니다.
 - **`components/TutorialPopup.tsx`, `AdSenseUnit.tsx`**: 기타 사용자 가이드 및 구글 애드센스를 위한 컴포넌트입니다.
